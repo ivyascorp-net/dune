@@ -17,6 +17,8 @@ limitations under the License.
 package v1alpha1
 
 import (
+	appsv1 "k8s.io/api/apps/v1"
+	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -28,14 +30,31 @@ type ArrakisSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of Arrakis. Edit arrakis_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// System
+
 }
+
+type System struct {
+	Name           string            `json:"name,omitempty"`
+	Image          string            `json:"image,omitempty"`
+	Replicas       string            `json:"replicas,omitempty"`
+	AppSettings    appsv1.Deployment `json:"appSettings,omitempty"`
+	ServiceAccount v1.ServiceAccount `json:"serviceAccount,omitempty"`
+	Service        v1.Service        `json:"service,omitempty"`
+}
+type ArrakisPhase string
+
+const (
+	ArrakisPhasePending  ArrakisPhase = "Pending"
+	ArrakisPhaseDeployed ArrakisPhase = "Deployed"
+	ArrakisPhaseFailed   ArrakisPhase = "Failed"
+)
 
 // ArrakisStatus defines the observed state of Arrakis.
 type ArrakisStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	Phase ArrakisPhase
 }
 
 // +kubebuilder:object:root=true
