@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- dune_v1alpha1_arrakis.yaml
+# +kubebuilder:scaffold:manifestskustomizesamples
